@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="industrial_arm">
+
+    <xacro:arg name="namespace" default=""/>
+    
+    <xacro:if value="${'$(arg namespace)' != ''}">
+        <xacro:property name="topic_prefix" value="/$(arg namespace)" />
+        <xacro:property name="frame_prefix" value="$(arg namespace)/" />
+    </xacro:if>
+    <xacro:if value="${'$(arg namespace)' == ''}">
+        <xacro:property name="topic_prefix" value="" />
+        <xacro:property name="frame_prefix" value="" />
+    </xacro:if>
+
+    <xacro:property name="mesh_scale" value="0.01 0.01 0.01" /> <xacro:property name="PI" value="3.14159265359" />
+
+    <material name="silver"><color rgba="0.75 0.75 0.75 1.0"/></material>
+    <material name="blue"><color rgba="0.0 0.0 0.8 1.0"/></material>
+    <material name="translucent_white"><color rgba="0.9 0.9 0.9 0.6"/></material>
+
+    <link name="world"/>
+
+    <joint name="world_to_base_joint" type="fixed">
+        <parent link="world"/>
+        <child link="${frame_prefix}base_link"/>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+    </joint>
+
+    <xacro:include filename="inertial_macros.xacro"/>
+
+    <xacro:include filename="robot_core.xacro"/>
+
+    <xacro:include filename="gripper.xacro"/>
+
+</robot>
