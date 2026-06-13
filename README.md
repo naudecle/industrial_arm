@@ -27,3 +27,47 @@ Pour la modélisation de ce bras robotique industriel, une architecture modulair
 ### 3. Cas d'un choix différent
 
 On aurait opté pour un fichier URDF simple et unique si le robot avait été une structure minimaliste et rigide, composée uniquement de formes primitives de base (comme un simple boîtier de fixation de capteur fixe ou une configuration cartésienne basique à deux articulations), sans mise à l'échelle complexe des maillages, sans structures articulées symétriques et avec des décalages spatiaux entièrement statiques et précalculés.
+
+## Installation de MoveIt jazzy
+
+### 1. Installer ROS 2 Jazzy
+
+Suivre la [documentation officielle ROS 2 Jazzy](https://docs.ros.org/en/jazzy/Installation/Ubuntu-Install-Debs.html).
+
+### 2. Installer les dépendances
+
+```bash
+sudo apt install -y \
+    ros-jazzy-rviz2 \
+    ros-jazzy-xacro \
+    ros-jazzy-moveit
+```
+
+### 3. Cloner et compiler le projet
+
+```bash
+# Créer le workspace (si pas déjà fait)
+mkdir -p ~/ros2_ws/src
+cd ~/ros2_ws/src
+
+# Cloner le dépôt
+git clone https://github.com/naudecle/industrial_arm.git
+
+# Compiler
+cd ~/ros2_ws
+ colcon build --packages-select industrial_arm_description
+
+# Sourcer l'environnement
+source install/setup.bash
+```
+
+> 💡 **Astuce** : Ajoutez `source ~/ros2_ws/install/setup.bash` et `source /opt/ros/jazzy/setup.bash` à votre `~/.bashrc` pour ne pas les refaire à chaque terminal.
+
+Avant de redémarrer vos nœuds, vérifiez que le paquet Moveit est correctement reconnu par l'environnement ROS 2:
+
+```bash
+ros2 pkg prefix moveit_setup_assistant
+```
+
+> 💡 **N.B** : si la commande renvoie le chemin d'accès au paquet, tout est prêt ! Si elle renvoie une erreur `Package not found` , vérifiez que votre compilation `colcon` s'est bien déroulée et que vous avez bien sourcé les chemins d'accès indiqués dans le fichier `setup.bash`.
+
