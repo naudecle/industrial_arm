@@ -47,7 +47,7 @@
     <joint name="joint2" type="revolute">
         <parent link="${frame_prefix}base_plate"/>
         <child link="${frame_prefix}forward_drive_arm"/>
-        <origin xyz="0 0.02 0.35" rpy="0 0 0"/> <axis xyz="0 1 0"/>
+        <origin xyz="0 0.02 0.35" rpy="0 0 0"/> <axis xyz="1 0 0"/>
         <limit lower="-${PI/2}" upper="${PI/2}" effort="15.0" velocity="2.0"/>
     </joint>
 
@@ -72,7 +72,7 @@
     <joint name="joint3" type="revolute">
         <parent link="${frame_prefix}forward_drive_arm"/>
         <child link="${frame_prefix}horizontal_arm"/>
-        <origin xyz="0 0 0.80" rpy="0 0 0"/> <axis xyz="0 1 0"/>
+        <origin xyz="0 0 0.80" rpy="0 0 0"/> <axis xyz="1 0 0"/>
         <limit lower="-${PI/2}" upper="${PI/2}" effort="12.0" velocity="2.0"/>
     </joint>
 
