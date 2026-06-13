@@ -1,55 +1,58 @@
 <?xml version="1.0"?>
 <robot xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-    <joint name="joint4" type="prismatic">
+    <joint name="joint4" type="revolute">
         <parent link="${frame_prefix}claw_support"/>
         <child link="${frame_prefix}gripper_right"/>
-        <origin xyz="0.01 -0.004 0.0" rpy="0 0 0"/> <axis xyz="0 1 0"/>
-        <limit lower="-0.015" upper="0.015" effort="5.0" velocity="1.0"/>
+        <origin xyz="0.18 -0.01 0.0" rpy="0 0 -${PI/2}"/>
+        <axis xyz="0 0 1"/>
+        <limit lower="-0.7" upper="0.0" effort="5.0" velocity="1.0"/>
     </joint>
 
     <link name="${frame_prefix}gripper_right">
         <visual>
-            <origin xyz="-0.1 0.5 -0.1" rpy="0 0 -${PI/2}"/> <geometry>
+            <origin xyz="-0.1 0.5 -0.1" rpy="0 0 -${PI/2}"/>
+            <geometry>
                 <mesh filename="package://industrial_arm_description/meshes/right_finger.STL" scale="${mesh_scale}"/>
             </geometry>
             <material name="silver"/>
         </visual>
         <collision>
-            <origin xyz="0.01 0.01 0" rpy="0 0 0"/>
+            <origin xyz="0.01 0.02 0" rpy="0 0 0"/>
             <geometry>
-                <box size="0.01 0.03 0.02"/>
+                <box size="0.01 0.04 0.02"/>
             </geometry>
         </collision>
-        <xacro:inertial_box mass="0.02" x="0.01" y="0.03" z="0.02">
-            <origin xyz="0.01 0.01 0" rpy="0 0 0"/>
+        <xacro:inertial_box mass="0.02" x="0.01" y="0.04" z="0.02">
+            <origin xyz="0.01 0.02 0" rpy="0 0 0"/>
         </xacro:inertial_box>
     </link>
 
-    <joint name="gripper_left_joint" type="prismatic">
+    <joint name="gripper_left_joint" type="revolute">
         <parent link="${frame_prefix}claw_support"/>
         <child link="${frame_prefix}gripper_left"/>
-        <origin xyz="0.004 -0.004 0.0" rpy="0 0 0"/>
-        <axis xyz="0 1 0"/>
-        <mimic joint="joint4" multiplier="-1"/> 
-        <limit lower="-0.015" upper="0.015" effort="5.0" velocity="1.0"/>
+        <origin xyz="0.18 0.165 -0.01" rpy="0 0 -${PI/2}"/>
+        <axis xyz="0 0 1"/>
+        <mimic joint="joint4" multiplier="-1"/>
+        <limit lower="-0.7" upper="0.0" effort="5.0" velocity="1.0"/>
     </joint>
 
     <link name="${frame_prefix}gripper_left">
         <visual>
-            <origin xyz="-0.04 0.5 -0.1" rpy="0 0 -${PI/2}"/> <geometry>
+            <origin xyz="-0.04 0.5 -0.1" rpy="0 0 -${PI/2}"/>
+            <geometry>
                 <mesh filename="package://industrial_arm_description/meshes/left_finger.STL" scale="${mesh_scale}"/>
             </geometry>
             <material name="silver"/>
         </visual>
         <collision>
-            <origin xyz="-0.01 0.01 0" rpy="0 0 0"/>
+            <origin xyz="-0.01 0.02 0" rpy="0 0 0"/>
             <geometry>
-                <box size="0.01 0.03 0.02"/>
+                <box size="0.01 0.04 0.02"/>
             </geometry>
         </collision>
-        <xacro:inertial_box mass="0.02" x="0.01" y="0.03" z="0.02">
-            <origin xyz="-0.01 0.01 0" rpy="0 0 0"/>
+        <xacro:inertial_box mass="0.02" x="0.01" y="0.04" z="0.02">
+            <origin xyz="-0.01 0.02 0" rpy="0 0 0"/>
         </xacro:inertial_box>
     </link>
 
