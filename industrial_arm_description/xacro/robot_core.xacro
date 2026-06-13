@@ -22,7 +22,7 @@
     <joint name="joint1" type="revolute">
         <parent link="${frame_prefix}base_link"/>
         <child link="${frame_prefix}base_plate"/>
-        <origin xyz="0 0 0.0307" rpy="0 0 0"/> <axis xyz="0 0 1"/>
+        <origin xyz="0 0 0.307" rpy="0 0 0"/> <axis xyz="0 0 1"/>
         <limit lower="-${PI}" upper="${PI}" effort="10.0" velocity="2.5"/>
     </joint>
 
@@ -47,7 +47,7 @@
     <joint name="joint2" type="revolute">
         <parent link="${frame_prefix}base_plate"/>
         <child link="${frame_prefix}forward_drive_arm"/>
-        <origin xyz="0 0.002 0.035" rpy="0 0 0"/> <axis xyz="0 1 0"/>
+        <origin xyz="0 0.02 0.35" rpy="0 0 0"/> <axis xyz="0 1 0"/>
         <limit lower="-${PI/2}" upper="${PI/2}" effort="15.0" velocity="2.0"/>
     </joint>
 
@@ -72,13 +72,13 @@
     <joint name="joint3" type="revolute">
         <parent link="${frame_prefix}forward_drive_arm"/>
         <child link="${frame_prefix}horizontal_arm"/>
-        <origin xyz="0 0 0.080" rpy="0 0 0"/> <axis xyz="0 1 0"/>
+        <origin xyz="0 0 0.80" rpy="0 0 0"/> <axis xyz="0 1 0"/>
         <limit lower="-${PI/2}" upper="${PI/2}" effort="12.0" velocity="2.0"/>
     </joint>
 
     <link name="${frame_prefix}horizontal_arm">
         <visual>
-            <origin xyz="0.03 -0.4 -0.06" rpy="${PI/2} 0 ${PI/2}"/> <geometry>
+            <origin xyz="-0.03 -0.4 -0.06" rpy="${PI/2} 0 ${PI/2}"/> <geometry>
                 <mesh filename="package://industrial_arm_description/meshes/horizontal_arm.STL" scale="${mesh_scale}"/>
             </geometry>
             <material name="translucent_white"/>
@@ -97,11 +97,12 @@
     <joint name="wrist_fixed_joint" type="fixed">
         <parent link="${frame_prefix}horizontal_arm"/>
         <child link="${frame_prefix}claw_support"/>
-        <origin xyz="0.082 0 0" rpy="0 0 0"/> </joint>
+        <origin xyz="0.1 0.75 0" rpy="0 0 ${PI/2}"/>
+    </joint>
 
     <link name="${frame_prefix}claw_support">
         <visual>
-            <origin xyz="0 -0.05 -0.15" rpy="0 0 ${PI/2}"/> <geometry>
+            <origin xyz="0 -0.05 -0.15" rpy="0 0 ${PI*2}"/> <geometry>
                 <mesh filename="package://industrial_arm_description/meshes/claw_support.STL" scale="${mesh_scale}"/>
             </geometry>
             <material name="blue"/>
