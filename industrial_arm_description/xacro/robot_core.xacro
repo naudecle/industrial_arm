@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <link name="${frame_prefix}base_link">
+        <visual>
+            <origin xyz="-0.5 -0.5 0" rpy="0 0 0"/> <geometry>
+                <mesh filename="package://industrial_arm_description/meshes/basement.STL" scale="${mesh_scale}"/>
+            </geometry>
+            <material name="translucent_white"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0.015" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.10" length="0.03"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="0.5" radius="0.10" length="0.03">
+            <origin xyz="0 0 0.015" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+    <joint name="joint1" type="revolute">
+        <parent link="${frame_prefix}base_link"/>
+        <child link="${frame_prefix}base_plate"/>
+        <origin xyz="0 0 0.307" rpy="0 0 0"/> <axis xyz="0 0 1"/>
+        <limit lower="-${PI}" upper="${PI}" effort="10.0" velocity="2.5"/>
+    </joint>
+
+    <link name="${frame_prefix}base_plate">
+        <visual>
+            <origin xyz="-0.39 -0.39 -0.56" rpy="0 0 0"/> <geometry>
+                <mesh filename="package://industrial_arm_description/meshes/base_plate.STL" scale="${mesh_scale}"/>
+            </geometry>
+            <material name="translucent_white"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0.02" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.06" length="0.04"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="0.3" radius="0.06" length="0.04">
+            <origin xyz="0 0 0.02" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+    <joint name="joint2" type="revolute">
+        <parent link="${frame_prefix}base_plate"/>
+        <child link="${frame_prefix}forward_drive_arm"/>
+        <origin xyz="0 0.02 0.35" rpy="0 0 0"/> <axis xyz="1 0 0"/>
+        <limit lower="-${PI/2}" upper="${PI/2}" effort="15.0" velocity="2.0"/>
+    </joint>
+
+    <link name="${frame_prefix}forward_drive_arm">
+        <visual>
+            <origin xyz="0.19 0.06 -0.08" rpy="0 -${PI/2} ${PI/2}"/> <geometry>
+                <mesh filename="package://industrial_arm_description/meshes/forward_drive_arm.STL" scale="${mesh_scale}"/>
+            </geometry>
+            <material name="translucent_white"/>
+        </visual>
+        <collision>
+            <origin xyz="0 0 0.04" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.03 0.03 0.08"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="0.2" x="0.03" y="0.03" z="0.08">
+            <origin xyz="0 0 0.04" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </link>
+
+    <joint name="joint3" type="revolute">
+        <parent link="${frame_prefix}forward_drive_arm"/>
+        <child link="${frame_prefix}horizontal_arm"/>
+        <origin xyz="0 0 0.80" rpy="0 0 0"/> <axis xyz="1 0 0"/>
+        <limit lower="-${PI/2}" upper="${PI/2}" effort="12.0" velocity="2.0"/>
+    </joint>
+
+    <link name="${frame_prefix}horizontal_arm">
+        <visual>
+            <origin xyz="-0.03 -0.4 -0.06" rpy="${PI/2} 0 ${PI/2}"/> <geometry>
+                <mesh filename="package://industrial_arm_description/meshes/horizontal_arm.STL" scale="${mesh_scale}"/>
+            </geometry>
+            <material name="translucent_white"/>
+        </visual>
+        <collision>
+            <origin xyz="0.04 0 0" rpy="0 ${PI/2} 0"/>
+            <geometry>
+                <box size="0.02 0.03 0.082"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="0.15" x="0.082" y="0.03" z="0.02">
+            <origin xyz="0.04 0 0" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </link>
+
+    <joint name="wrist_fixed_joint" type="fixed">
+        <parent link="${frame_prefix}horizontal_arm"/>
+        <child link="${frame_prefix}claw_support"/>
+        <origin xyz="0.1 0.75 0" rpy="0 0 ${PI/2}"/>
+    </joint>
+
+    <link name="${frame_prefix}claw_support">
+        <visual>
+            <origin xyz="0 -0.05 -0.15" rpy="0 0 ${PI*2}"/> <geometry>
+                <mesh filename="package://industrial_arm_description/meshes/claw_support.STL" scale="${mesh_scale}"/>
+            </geometry>
+            <material name="blue"/>
+        </visual>
+        <collision>
+            <origin xyz="0.01 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.03 0.04 0.03"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_box mass="0.1" x="0.03" y="0.04" z="0.03">
+            <origin xyz="0.01 0 0" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </link>
+
+</robot>
